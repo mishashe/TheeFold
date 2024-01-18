@@ -1,6 +1,11 @@
-dir <- "/home/misha/Documents/Development/ThreeFold/"
-sp1 <- "Escherichia_coli"
-sp2 <- "Klebsiella_pneumoniae"
+args = commandArgs(trailingOnly=TRUE)
+species1 <- args[1]
+species2 <- args[2]
+
+# dir <- "/home/misha/Documents/Development/ThreeFold/"
+dir <- "/scratch/ws1/msheinman-msheinman/ThreeFold/"
+# sp1 <- "Escherichia_coli"
+# sp2 <- "Klebsiella_pneumoniae"
 # sp2 <- "Salmonella_enterica"
 
 
@@ -16,7 +21,7 @@ if (!file.exists(paste0(dir,"data/external/",sp2,".fna"))) {system(paste0("cat "
 soft <- "/home/misha/Documents/Development/Software/bfmem/bfmem "
 # soft <- "/home/misha/Documents/Development/Software/copmem2-main/copmem2 "
 system(paste0("mkdir -p ",dir,"data/processed/",sp2,"_vs_",sp1,"/"))
-Command <- paste0(soft," -s b -t 5 -l 300  -o ",dir,"data/processed/",sp2,"_vs_",sp1,"/",sp2,"_vs_",sp1,".tsv -r ",dir,"data/external/",sp1,".fna"," -q ",dir,"data/external/",sp2,".fna")
+Command <- paste0(soft," -s b -t 128 -l 300  -o ",dir,"data/processed/",sp2,"_vs_",sp1,"/",sp2,"_vs_",sp1,".tsv -r ",dir,"data/external/",sp1,".fna"," -q ",dir,"data/external/",sp2,".fna")
 system(Command)
 
 
