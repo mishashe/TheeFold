@@ -58,6 +58,7 @@ def clean_gtdb(gtdb_taxo):
 f1 = open(output_file,"w")
 f1.write("assembly_accession\n")
 
+#count = 0
 with open (metadata_file,'r') as meta: 
     meta.readline()
     for line in meta.readlines():
@@ -71,6 +72,9 @@ with open (metadata_file,'r') as meta:
             if row[58] != "derived from metagenome" : #remove genomes extracted from metagenome analysis
                 if gtdb [ taxa_level ] == taxa_to_dl:
                     f1.write(row[0][3:]+"\n")
+#                    count = count+1
+#                    if count >10:
+#                        break
 
 f1.close()
 

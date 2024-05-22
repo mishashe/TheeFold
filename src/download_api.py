@@ -243,7 +243,8 @@ def main():
     # create taxon csv
     taxon_csv = create_taxon_csv(genome_dir, "./assembly_data_report.jsonl", ["order", "genus", "family", "species"], args.rankedlineage, args.gtdb_taxonomy)
     taxon_csv.to_csv(out_csv)
-    genome_dir_no_plasmid = genome_dir.strip("/") + "_no_plasmid"
+#    genome_dir_no_plasmid = genome_dir.strip("/") + "_no_plasmid"
+    genome_dir_no_plasmid = genome_dir + "_no_plasmid"
     write_only_chromosomes(genome_dir, genome_dir_no_plasmid)
 
 if __name__ == "__main__":
