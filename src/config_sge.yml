@@ -1,0 +1,9 @@
+__default__:
+  mem: '4gb'
+  time: '4-00:00:00'
+
+HighMem:
+  mem: '128000'
+  time: '04:00:00'
+
+
