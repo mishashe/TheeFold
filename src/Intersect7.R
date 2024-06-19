@@ -15,7 +15,7 @@ library(doParallel)
 require(intervals)
 library(sets)
 require(data.table)
-library(intervalaverage)
+#library(intervalaverage)
 library(dplyr)
 library(plotrix)
 library(iterators)
@@ -24,7 +24,9 @@ library(seqinr);
 library(questionr)
 library(Rcpp)
 library(RcppArmadillo)
-Rcpp::sourceCpp(paste0("/home/msheinman/Development/ThreeFold/src/intersect_weighted.cpp"))
+Rcpp::sourceCpp(paste0("~/HGTnew/multi_comparisons/ThreeFold/src/intersect_weighted.cpp"))
+dir = "~/HGTnew/multi_comparisons/"
+
 
 
 registerDoParallel(128)
@@ -57,32 +59,32 @@ dir <- "/scratch/ws1/msheinman-msheinman/ThreeFold/" # Afalina
 system(paste0("mkdir -p ",dir,"plots/"))
 
 
-system(paste0("mkdir -p ",dir,"data/processed/",sp7,"_vs_",sp6,"_vs_",sp5,"_vs_",sp4,"_vs_",sp3,"_vs_",sp2,"_vs_",sp1,"/"))
-group1 <- h5ls(paste0(dir,"data/processed/",sp2,"_vs_",sp1,"/",sp2,"_vs_",sp1,".h5"))$group[2]
-group2 <- h5ls(paste0(dir,"data/processed/",sp3,"_vs_",sp1,"/",sp3,"_vs_",sp1,".h5"))$group[2]
-group3 <- h5ls(paste0(dir,"data/processed/",sp4,"_vs_",sp1,"/",sp4,"_vs_",sp1,".h5"))$group[2]
-group4 <- h5ls(paste0(dir,"data/processed/",sp5,"_vs_",sp1,"/",sp5,"_vs_",sp1,".h5"))$group[2]
-group5 <- h5ls(paste0(dir,"data/processed/",sp6,"_vs_",sp1,"/",sp6,"_vs_",sp1,".h5"))$group[2]
-group6 <- h5ls(paste0(dir,"data/processed/",sp7,"_vs_",sp1,"/",sp7,"_vs_",sp1,".h5"))$group[2]
+system(paste0("mkdir -p ",dir,"data/processed/",sp7,"_",sp6,"_",sp5,"_",sp4,"_",sp3,"_",sp2,"_",sp1,"/"))
+group1 <- h5ls(paste0(dir,"data/processed/",sp2,"_",sp1,"/",sp2,"_",sp1,".h5"))$group[2]
+group2 <- h5ls(paste0(dir,"data/processed/",sp3,"_",sp1,"/",sp3,"_",sp1,".h5"))$group[2]
+group3 <- h5ls(paste0(dir,"data/processed/",sp4,"_",sp1,"/",sp4,"_",sp1,".h5"))$group[2]
+group4 <- h5ls(paste0(dir,"data/processed/",sp5,"_",sp1,"/",sp5,"_",sp1,".h5"))$group[2]
+group5 <- h5ls(paste0(dir,"data/processed/",sp6,"_",sp1,"/",sp6,"_",sp1,".h5"))$group[2]
+group6 <- h5ls(paste0(dir,"data/processed/",sp7,"_",sp1,"/",sp7,"_",sp1,".h5"))$group[2]
 
 
 
-headers1 <- h5ls(paste0(dir,"data/processed/",sp2,"_vs_",sp1,"/",sp2,"_vs_",sp1,".h5"))$name; headers <- unique(headers1)
-headers2 <- h5ls(paste0(dir,"data/processed/",sp3,"_vs_",sp1,"/",sp3,"_vs_",sp1,".h5"))$name; headers <- unique(intersect(headers,headers2))
-headers3 <- h5ls(paste0(dir,"data/processed/",sp4,"_vs_",sp1,"/",sp4,"_vs_",sp1,".h5"))$name; headers <- unique(intersect(headers,headers3))
-headers4 <- h5ls(paste0(dir,"data/processed/",sp5,"_vs_",sp1,"/",sp5,"_vs_",sp1,".h5"))$name; headers <- unique(intersect(headers,headers4))
-headers5 <- h5ls(paste0(dir,"data/processed/",sp6,"_vs_",sp1,"/",sp6,"_vs_",sp1,".h5"))$name; headers <- unique(intersect(headers,headers5))
-headers6 <- h5ls(paste0(dir,"data/processed/",sp7,"_vs_",sp1,"/",sp7,"_vs_",sp1,".h5"))$name; headers <- unique(intersect(headers,headers6))
+headers1 <- h5ls(paste0(dir,"data/processed/",sp2,"_",sp1,"/",sp2,"_",sp1,".h5"))$name; headers <- unique(headers1)
+headers2 <- h5ls(paste0(dir,"data/processed/",sp3,"_",sp1,"/",sp3,"_",sp1,".h5"))$name; headers <- unique(intersect(headers,headers2))
+headers3 <- h5ls(paste0(dir,"data/processed/",sp4,"_",sp1,"/",sp4,"_",sp1,".h5"))$name; headers <- unique(intersect(headers,headers3))
+headers4 <- h5ls(paste0(dir,"data/processed/",sp5,"_",sp1,"/",sp5,"_",sp1,".h5"))$name; headers <- unique(intersect(headers,headers4))
+headers5 <- h5ls(paste0(dir,"data/processed/",sp6,"_",sp1,"/",sp6,"_",sp1,".h5"))$name; headers <- unique(intersect(headers,headers5))
+headers6 <- h5ls(paste0(dir,"data/processed/",sp7,"_",sp1,"/",sp7,"_",sp1,".h5"))$name; headers <- unique(intersect(headers,headers6))
 
 headers <- unique(headers[!headers %in% c("comp1","comp2","comp")])
 rTable <- foreach(header=headers, .inorder=FALSE, .combine=combine_tables) %dopar%
 {
-  intervals1 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp2,"_vs_",sp1,"/",sp2,"_vs_",sp1,".h5"), paste0(group1,"/",header))))
-  intervals2 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp3,"_vs_",sp1,"/",sp3,"_vs_",sp1,".h5"), paste0(group2,"/",header))))
-  intervals3 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp4,"_vs_",sp1,"/",sp4,"_vs_",sp1,".h5"), paste0(group3,"/",header))))
-  intervals4 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp5,"_vs_",sp1,"/",sp5,"_vs_",sp1,".h5"), paste0(group4,"/",header))))
-  intervals5 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp6,"_vs_",sp1,"/",sp6,"_vs_",sp1,".h5"), paste0(group5,"/",header))))
-  intervals6 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp7,"_vs_",sp1,"/",sp7,"_vs_",sp1,".h5"), paste0(group6,"/",header))))
+  intervals1 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp2,"_",sp1,"/",sp2,"_",sp1,".h5"), paste0(group1,"/",header))))
+  intervals2 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp3,"_",sp1,"/",sp3,"_",sp1,".h5"), paste0(group2,"/",header))))
+  intervals3 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp4,"_",sp1,"/",sp4,"_",sp1,".h5"), paste0(group3,"/",header))))
+  intervals4 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp5,"_",sp1,"/",sp5,"_",sp1,".h5"), paste0(group4,"/",header))))
+  intervals5 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp6,"_",sp1,"/",sp6,"_",sp1,".h5"), paste0(group5,"/",header))))
+  intervals6 <- as.data.table(as.matrix(h5read(paste0(dir,"data/processed/",sp7,"_",sp1,"/",sp7,"_",sp1,".h5"), paste0(group6,"/",header))))
   
   
   intervals1 <- (intervals1 %>% group_by_all() %>% summarise(COUNT = n(), .groups="keep"))
@@ -105,7 +107,7 @@ rTable <- foreach(header=headers, .inorder=FALSE, .combine=combine_tables) %dopa
   intersects <- (intersects %>% group_by_at(vars(V1,V2)) %>% summarise(w = sum(V3), .groups="keep"))
   wtd.table(as.integer(intersects$V2-intersects$V1+1),w=as.numeric(intersects$w))
 }
-write.table(data.frame(r=as.integer(names(rTable)),m=as.numeric(rTable)),paste0(dir,"data/processed/",sp7,"_vs_",sp6,"_vs_",sp5,"_vs_",sp4,"_vs_",sp3,"_vs_",sp2,"_vs_",sp1,"/",sp7,"_vs_",sp6,"_vs_",sp5,"_vs_",sp4,"_vs_",sp3,"_vs_",sp2,"_vs_",sp1,".tsv"),append=FALSE,row.names=FALSE,col.names=FALSE,sep = "\t",quote=FALSE)
+write.table(data.frame(r=as.integer(names(rTable)),m=as.numeric(rTable)),paste0(dir,"data/processed/",sp7,"_",sp6,"_",sp5,"_",sp4,"_",sp3,"_",sp2,"_",sp1,"/",sp7,"_",sp6,"_",sp5,"_",sp4,"_",sp3,"_",sp2,"_",sp1,".tsv"),append=FALSE,row.names=FALSE,col.names=FALSE,sep = "\t",quote=FALSE)
 
 
 

@@ -13,7 +13,8 @@ configfile:"config_dl.yml"
 rule all:
 	input:
 #		expand("{DATA_DIR}/list_samples/{SPECIES}.txt",DATA_DIR=config["DATA_DIR"],SPECIES=config["SPECIES"]),
-		expand("{DATA_DIR}/list_samples/{GENUS}_csv",DATA_DIR=config["DATA_DIR"],GENUS=config["GENUS"])
+		expand("{DATA_DIR}/list_samples/{GENUS}_csv",DATA_DIR=config["DATA_DIR"],GENUS=config["GENUS"]),
+		expand("{DATA_DIR}/fasta/{GENUS}.fna",DATA_DIR=config["DATA_DIR"],GENUS=config["GENUS"])
 
 
 rule DownloadSP:
@@ -21,7 +22,7 @@ rule DownloadSP:
 		meta=expand("{DATA_DIR}/bac120_metadata_r220.tsv",DATA_DIR=config["DATA_DIR"])
 	output:
 		listFile=expand("{DATA_DIR}/list_samples/{{GENUS}}_csv",DATA_DIR=config["DATA_DIR"]),
-		fasta=directory(config["DATA_DIR"]+"/fasta/{GENUS}/")
+		fasta=directory(config["DATA_DIR"]+"/fasta/{GENUS,\w+}/")
 	conda:
 		config["CONDA_FILE"]
 	shell:
@@ -32,6 +33,17 @@ rule DownloadSP:
                    python3 {config[CODE_DIR]}/download_api.py {config[DATA_DIR]}/list_samples/{wildcards.GENUS}_to_dl.txt \
                    {config[DATA_DIR]}/new_taxdump/rankedlineage.dmp {config[DATA_DIR]}/bac120_taxonomy_r220.tsv.gz \
                    {config[DATA_DIR]}/fasta/{wildcards.GENUS}  {output.listFile}"""
+
+
+rule Concat:
+	input:
+		listFile=expand("{DATA_DIR}/list_samples/{{GENUS}}_csv",DATA_DIR=config["DATA_DIR"])
+	output:
+		fasta=expand("{DATA_DIR}/fasta/{{GENUS}}.fna",DATA_DIR=config["DATA_DIR"])
+	conda:
+		config["CONDA_FILE2"]
+	shell:
+		"""Rscript {config[CODE_DIR]}/Concat.R {wildcards.GENUS}"""
 
 
 
