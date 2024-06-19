@@ -60,7 +60,7 @@ snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/4.compare.smk \
            --configfile config.yml \
 	   --rerun-incomplete 
 
-snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/5.compare.smk
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/5.compare.smk -n --unlock
 
 snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/5.compare.smk \
            --use-conda \
@@ -70,7 +70,7 @@ snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/5.compare.smk \
            --configfile config.yml \
 	   --rerun-incomplete 
 
-snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/6.compare.smk
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/6.compare.smk -n --unlock
 
 snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/6.compare.smk \
            --use-conda \
@@ -80,7 +80,7 @@ snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/6.compare.smk \
            --configfile config.yml \
 	   --rerun-incomplete 
 
-snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/7.compare.smk
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/7.compare.smk -n --unlock
 
 snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/7.compare.smk \
            --use-conda \
@@ -92,7 +92,7 @@ snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/7.compare.smk \
 
 
 
-snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/8.compare.smk
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/8.compare.smk -n --unlock
 
 snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/8.compare.smk \
            --use-conda \
@@ -101,21 +101,6 @@ snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/8.compare.smk \
 	   --jobs 2 \
            --configfile config.yml \
 	   --rerun-incomplete 
-
-
-snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/4.compare.smk
-
-snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/4.compare.smk \
-           --use-conda \
-	   --cluster-config config_sge.yml \
-	   --cluster "sbatch -N 1 -c 1 -J PointLumineux  -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
-	   --jobs 30 \
-           --configfile config.yml \
-	   --rerun-incomplete 
-
-
-
-
 
 
 #for i in `head -n 2  Species_list`
