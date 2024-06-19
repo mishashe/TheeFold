@@ -24,10 +24,98 @@ snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/1.download.smk -n --unlock
 snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/1.download.smk \
            --use-conda \
 	   --cluster-config config_sge.yml \
-	   --cluster "sbatch -N 1 -c 1 -J PointLumineux  -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
-	   --jobs 40 \
+	   --cluster "sbatch -N 1 -c 1 -J PntLum1  -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
+	   --jobs 30 \
            --configfile config_dl.yml \
 	   --rerun-incomplete 
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/2.compare_pairwise.smk -n --unlock
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/2.compare_pairwise.smk \
+           --use-conda \
+	   --cluster-config config_sge.yml \
+	   --cluster "sbatch -N 1 -c 1 -J PntLum2  -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
+	   --jobs 30 \
+           --configfile config.yml \
+	   --rerun-incomplete 
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/3.compare_three.smk -n --unlock
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/3.compare_three.smk \
+           --use-conda \
+	   --cluster-config config_sge.yml \
+	   --cluster "sbatch -N 1 -c 1 -J PntLum3  -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
+	   --jobs 30 \
+           --configfile config.yml \
+	   --rerun-incomplete 
+
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/4.compare.smk -n --unlock
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/4.compare.smk \
+           --use-conda \
+	   --cluster-config config_sge.yml \
+	   --cluster "sbatch -N 1 -c 1 -J PntLum4  -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
+	   --jobs 30 \
+           --configfile config.yml \
+	   --rerun-incomplete 
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/5.compare.smk
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/5.compare.smk \
+           --use-conda \
+	   --cluster-config config_sge.yml \
+	   --cluster "sbatch -N 1 -c 1 -J PntLum5  -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
+	   --jobs 30 \
+           --configfile config.yml \
+	   --rerun-incomplete 
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/6.compare.smk
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/6.compare.smk \
+           --use-conda \
+	   --cluster-config config_sge.yml \
+	   --cluster "sbatch -N 1 -c 1 -J PntLum6  -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
+	   --jobs 20 \
+           --configfile config.yml \
+	   --rerun-incomplete 
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/7.compare.smk
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/7.compare.smk \
+           --use-conda \
+	   --cluster-config config_sge.yml \
+	   --cluster "sbatch -N 1 -c 1 -J PntLum7 -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
+	   --jobs 10 \
+           --configfile config.yml \
+	   --rerun-incomplete 
+
+
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/8.compare.smk
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/8.compare.smk \
+           --use-conda \
+	   --cluster-config config_sge.yml \
+	   --cluster "sbatch -N 1 -c 1 -J PntLum8  -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
+	   --jobs 2 \
+           --configfile config.yml \
+	   --rerun-incomplete 
+
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/4.compare.smk
+
+snakemake -s ~/HGTnew/multi_comparisons/ThreeFold/src/4.compare.smk \
+           --use-conda \
+	   --cluster-config config_sge.yml \
+	   --cluster "sbatch -N 1 -c 1 -J PointLumineux  -o $LOGDIR/%j.log -t {cluster.time} --mem {cluster.mem}" \
+	   --jobs 30 \
+           --configfile config.yml \
+	   --rerun-incomplete 
+
+
+
+
 
 
 #for i in `head -n 2  Species_list`
