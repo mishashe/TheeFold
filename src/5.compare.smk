@@ -25,12 +25,12 @@ def get_combos(Genus_list):
 		for i2 in range(i1+1,n-3):
 			for i3 in range(i2+1,n-2):
 				for i4 in range(i3+1,n-1):
-					for i5 in range(i4+1,n)
-					combo = G[i1] + " " + G[i2] + " " + G[i3] + " " + G[i4] + " " + G[i5] 
-					combo2 = G[i1] + "_" + G[i2] + "_" + G[i3] + "_" + G[i4] + "_" + G[i5]  
+					for i5 in range(i4+1,n):
+						combo = G[i1] + " " + G[i2] + " " + G[i3] + " " + G[i4] + " " + G[i5] 
+						combo2 = G[i1] + "_" + G[i2] + "_" + G[i3] + "_" + G[i4] + "_" + G[i5]  
 
-					all_combos.append(combo)
-					all_combos2.append(combo2)
+						all_combos.append(combo)
+						all_combos2.append(combo2)
 	return (all_combos,all_combos2)
 
 
