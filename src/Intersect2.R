@@ -57,7 +57,7 @@ myFile = paste0(dir,"data/processed/",sp2,"_",sp1,"/",sp2,"_",sp1,".tsv")
 comp <- read.table(myFile, header = FALSE,  colClasses=c("character", "integer","integer","integer")); colnames(comp) <- c("header","start","foo","length")
 
 
-comp = comp[which(comp[,4]>299),] # Need to add that otherwise h5 file is too big
+#comp = comp[which(comp[,4]>299),] # Need to add that otherwise h5 file is too big
 comp <- comp[,c(1,2,4)]
 #}else{
 #comp = 	
