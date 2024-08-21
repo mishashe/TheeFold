@@ -87,6 +87,9 @@ toExtract = {}
 
 concatenated_dat = concatenated_dat.rstrip()
 
+#f2 = open(output_file+"_tmp_merged","w")
+#f2.write(concatenated_dat)
+#f2.close()
 for line in pattNewline.split(concatenated_dat):
 	row = line.split('\t')
 	if row[0] in toExtract.keys():
