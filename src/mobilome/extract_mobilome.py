@@ -33,6 +33,7 @@ help="the number of strains from which we want to extract the mobilome")
 
 (options, args) = parser.parse_args()
 patt=re.compile("start=([0-9]+)")
+pattATCG = re.compile("[^ATCGNatcgn\n]")
 
 #query_file = options.query_file
 clade_dir = options.clade_dir
@@ -109,7 +110,9 @@ def mergeOverlap_and_extract_fasta(Matches,query_file,opFile,clade_dir):
 		for index in range(0,len(toExtract[cle])):
 			start = int(toExtract[cle][index][0])
 			end = int(toExtract[cle][index][1])
-			opFile.write(str(all_contigs[cle].seq[start:end]))
+			subseq = str(all_contigs[cle].seq[start:end])
+			subseqN = re.sub(pattATCG,"N",subseq) #convert Ambiguous caracters to Ns
+			opFile.write(subseqN)
 			opFile.write("N")
 
 		opFile.write("\n")
@@ -119,7 +122,7 @@ def mergeOverlap_and_extract_fasta(Matches,query_file,opFile,clade_dir):
 
 allFiles = os.listdir(clade_dir)
 
-randList = random.sample(allFiles,k = nb_strains)
+randList = random.sample(allFiles,k = min(nb_strains,len(allFiles)))
 f2 = open(output_file+'_listFiles.txt',"w")
 f2.write("\n".join(randList))
 f2.close()
@@ -130,7 +133,8 @@ f1= open(output_file+'_seq.fa',"w")
 for myFile in randList:
 	print(myFile)
 	Matches = launch_blast(db_file = db_file,query_file = myFile,clade_dir = clade_dir)
-	mergeOverlap_and_extract_fasta(Matches = Matches, query_file = myFile ,opFile = f1,clade_dir = clade_dir)
+	if Matches:
+		mergeOverlap_and_extract_fasta(Matches = Matches, query_file = myFile ,opFile = f1,clade_dir = clade_dir)
 
 
 
