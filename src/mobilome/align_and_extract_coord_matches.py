@@ -23,21 +23,18 @@ parser.add_option("--st1",dest="strain1",action="store",
 parser.add_option("--st2",dest="strain2",action="store",
 		  help="strain2")
 
-parser.add_option("--sp1",dest="species1",action="store",
-		  help="species1")
-
-parser.add_option("--sp2",dest="species2",action="store",
-		  help="species2")
-#parser.add_option("-l", "--list",dest="list_file",action="store",
-#		  help="list of multifasta file to read")
+#parser.add_option("--sp1",dest="species1",action="store",
+#		  help="species1")
 #
+#parser.add_option("--sp2",dest="species2",action="store",
+#		  help="species2")
 #
 (options, args) = parser.parse_args()
 out=options.out
 strain1 = options.strain1
 strain2 = options.strain2
-species1 = options.species1
-species2 = options.species2
+#species1 = options.species1
+#species2 = options.species2
 #list_file = options.list_file
 #
 #listFile=[]
@@ -46,15 +43,13 @@ species2 = options.species2
 
 patt = re.compile("END")
 pattNum = re.compile("[0-9]+$")
-pattMiss = re.compile("\^")
+#pattMiss = re.compile("\^")
 align = ""
 pattNewline = re.compile("\\n")
 pattEq = re.compile("=")
 #in_file = "~/HGTnew/dating_long_distance/results/nucmer/EscherichiaColi_KlebsiellaPneumoniae/SAMN02850627_0.fasta-SAMN02141993_0.fasta.delta"
 
 myDir = "/cluster/CBIO/data1/fmassip/HGT/ProjectMisha/HGTnew/multi_comparisons/data/mobilome/"
-#species1 = "Acinetobacter"
-#species2 = "EscherichiaColi"
 
 def add_MLDs(full_MLD,new_MLD):
 	full_MLD[new_MLD[:,0],1] = full_MLD[new_MLD[:,0],1] + new_MLD[:,1]
@@ -100,7 +95,7 @@ def parse_Align(strain1,strain2):
 		current_pos_ref = int(current_pos_ref)
 		current_pos_sub = int(current_pos_sub)
 		for  charac in cigar:
-			if re.match("\d",charac):
+			if re.match("\\d",charac):
 				tmp_digit = tmp_digit+charac
 			else:
 				if tmp_digit == "0":
