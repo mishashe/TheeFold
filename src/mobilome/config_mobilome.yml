@@ -1,0 +1,29 @@
+CONDA_FILE: ../envs/ncbi_datasets_env.yaml
+CONDA_FILE2: ../envs/MultiSP.yml
+DATA_DIR_FAST: /cbio/donnees/fmassip/HGT/ProjectMisha/HGTnew/data
+DATA_DIR: "/cluster/CBIO/data1/fmassip/HGT/ProjectMisha/HGTnew/multi_comparisons/data"
+CODE_DIR: "/cluster/CBIO/data1/fmassip/HGT/ProjectMisha/HGTnew/multi_comparisons/ThreeFold/src/mobilome"
+RES_DIR: "/cluster/CBIO/data1/fmassip/HGT/ProjectMisha/HGTnew/multi_comparisons/data/mobilome"
+
+#SPECIES2: "Salmonella"
+#SPECIES1: "Pseudomonas"
+
+
+
+GENUS: ["Bacillus",
+"Bacteroides",
+"Brucella",
+#"Clostridium",
+"Lysinibacillus",
+"Niallia",
+"Paenibacillus",
+"Staphylococcus",
+"Streptococcus",
+"Streptomyces",
+"Clostridioides"]
+
+#"Lacticaseibacillus",
+#"Lactococcus",
+#"Lactobacillus",
+#"Lactiplantibacillus",
+#"Priestia"]
