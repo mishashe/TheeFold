@@ -1,0 +1,36 @@
+CONDA_FILE: ../envs/ncbi_datasets_env.yaml
+CONDA_FILE2: ../envs/MultiSP.yml
+DATA_DIR_FAST: /cbio/donnees/fmassip/HGT/ProjectMisha/HGTnew/data
+DATA_DIR: "/cluster/CBIO/data1/fmassip/HGT/ProjectMisha/HGTnew/dating_long_distance/data/fasta_filtered"
+
+DATA_DIR_MOB: "/cluster/CBIO/data1/fmassip/HGT/ProjectMisha/HGTnew/multi_comparisons/data"
+CODE_DIR: "/cluster/CBIO/data1/fmassip/HGT/ProjectMisha/HGTnew/multi_comparisons/ThreeFold/src/mobilome"
+RES_DIR: "/cluster/CBIO/data1/fmassip/HGT/ProjectMisha/HGTnew/multi_comparisons/data/mobilome"
+
+#SPECIES2: "Salmonella"
+#SPECIES1: "Pseudomonas"
+
+
+GENUS: ["Acinetobacter",
+"EscherichiaColi",
+"Citrobacter",
+"KlebsiellaPneumoniae",
+"Salmonella"]
+
+
+#"Serratia",
+#"Staphylococcus",
+#"Streptococcus",
+#"Streptomyces",
+#"Vibrio",
+#"Yersinia",
+#"Nostoc",
+#"Clostridioides",
+#"Arthrobacter",
+#"Helicobacter",
+#"Prochlorococcus",
+#"Leptospira",
+#"Borreliella",
+#"Treponema",
+#"Enterococcus"]
+
