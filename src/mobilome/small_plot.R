@@ -2,7 +2,6 @@
 
 
 
-binSize = 0.15
 # delta = 0.55 
 
 
@@ -31,32 +30,35 @@ coarse_grain <- function(m, rB,  binSize = binSize){
 
 
 
-allFiles = list.files("~/HGTnew/multi_comparisons/data/mobilome/alignments/pairs/")
+allFiles = list.files("~/HGTnew/multi_comparisons/data/mobilome/Matches/pairs/")
 allFiles = allFiles[grep (allFiles,pattern = "lastZ",invert =T)]
 allFiles = allFiles[grep (allFiles,pattern = "mld",invert =T)]             
 x = 1:10000
 
-for (i in allFiles){
-pdf(paste0("~/HGTnew/multi_comparisons/plots/mobilome/new_plots/",i,".pdf"))
 
-  MLD_file = paste0("~/HGTnew/multi_comparisons/data/mobilome/alignments/pairs/",i,".mld")
+binSize = 0.1
+
+for (i in allFiles){
+pdf(paste0("~/HGTnew/multi_comparisons/plots/mobilome/plotsBfmem/",i,".pdf"))
+
+  MLD_file = paste0("~/HGTnew/multi_comparisons/data/mobilome/Matches/pairs/",i,".mld")
   if (file.exists(MLD_file)){
     print("MLD exist")
   }else{
-  comm = paste0("cut -f 4 ~/HGTnew/multi_comparisons/data/mobilome/alignments/pairs/",i," | sort -n |uniq -c |grep -v '>'")
+  comm = paste0("cut -f 4 ~/HGTnew/multi_comparisons/data/mobilome/Matches/pairs/",i," | sort -n |uniq -c |grep -v '>'")
   a = read.table(pipe(comm))
   write.table(a, file = MLD_file, append = FALSE, quote = FALSE, sep = "\t",row.names = F,col.names = F)
   }
   
   a = read.table(MLD_file,stringsAsFactors = FALSE)
 
-  MLD2 = coarse_grain(m  = a$V1, rB = a$V2,binSize=0.15)
+  MLD2 = coarse_grain(m  = a$V1, rB = a$V2,binSize=binSize)
 
-  plot(MLD2, xlim = c(1,max(a$V2)*5),log="xy", pch = "+", main = i)
-myTwenty = which.min(abs(MLD2[,1]-20))
+  plot(MLD2, xlim = c(20,max(a$V2)*5),log="xy", pch = "+", main = i)
+myTwenty = which.min(abs(MLD2[,1]-25))
 
-  lines(x,x^-3 * 20^3 * MLD2[myTwenty,2],lty = 2, col = 2)
-  lines(x,x^-4 * 20^4 * MLD2[myTwenty,2],lty = 2, col = 4)
+  lines(x,x^-3 * 25^3 * MLD2[myTwenty,2],lty = 2, col = 2)
+  lines(x,x^-4 * 25^4 * MLD2[myTwenty,2],lty = 2, col = 4)
 
   print(i)
   print(date())
