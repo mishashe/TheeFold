@@ -81,11 +81,11 @@ def launch_blast(db_file,pdb_file,subject_file,clade_dir):
 			row[8] = int(row[8])
 			row[9] = int(row[9])
 			if row[8] > row[9]:
-				start = max(0,row[9]-500)
-				end = row[8]+500
+				start = max(0,row[9]-2000)
+				end = row[8]+2000
 			else:
-				start = max(0,row[8]-500)
-				end = row[9]+500
+				start = max(0,row[8]-2000)
+				end = row[9]+2000
  
 			if row[1] in Matches.keys():
 				Matches[row[1]].append([start,end])
@@ -109,7 +109,7 @@ def mergeOverlap_and_extract_fasta(Matches,subject_file,opFile,clade_dir):
 		np.savetxt(output_file+'_tmp/'+subject_file,final_array,delimiter = "\t",fmt = '%s')
 		
 
-	concatenated_dat = subprocess.run(['mergeBed','-i',output_file+'_tmp/'+subject_file,'-d','1000'], stdout=subprocess.PIPE).stdout.decode('utf-8')
+	concatenated_dat = subprocess.run(['mergeBed','-i',output_file+'_tmp/'+subject_file,'-d','4000'], stdout=subprocess.PIPE).stdout.decode('utf-8')
 	toExtract = {}
 	concatenated_dat = concatenated_dat.rstrip()
 
