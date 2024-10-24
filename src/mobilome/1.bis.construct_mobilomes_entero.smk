@@ -37,7 +37,8 @@ rule all:
 		#expand("{DATA_DIR}/fasta/{GENUS}.fna",DATA_DIR=config["DATA_DIR"],GENUS=config["GENUS"])
 		expand("{DATA_DIR}/mobilome/{GENUS}_seq.fa",DATA_DIR=config["DATA_DIR"],GENUS=config["GENUS"]),
 		expand("{DATA_DIR}/mobilome/{GENUS}_listFiles.txt",DATA_DIR=config["DATA_DIR"],GENUS=config["GENUS"]),
-		expand("{DATA_DIR_MOB}/mobilome/alignments/pairs/{COMBOS2}.tsv",DATA_DIR=config["DATA_DIR"],COMBOS2=COMBOS2,DATA_DIR_MOB=config["DATA_DIR_MOB"])
+		expand("{DATA_DIR_MOB}/mobilome/Matches/pairs/{COMBOS2}.tsv",DATA_DIR=config["DATA_DIR"],COMBOS2=COMBOS2,DATA_DIR_MOB=config["DATA_DIR_MOB"])
+#		expand("{DATA_DIR_MOB}/mobilome/alignments/pairs/{COMBOS2}.tsv",DATA_DIR=config["DATA_DIR"],COMBOS2=COMBOS2,DATA_DIR_MOB=config["DATA_DIR_MOB"])
 
 rule Extract:
 	input:
@@ -51,22 +52,36 @@ rule Extract:
 		config["CONDA_FILE2"]
 	shell:
 		"""python3 {config[CODE_DIR]}/extract_mobilome.py -c {config[DATA_DIR]}/{wildcards.GENUS}\
-		 -n 20 \
+		 -n 100 \
 		-o {config[DATA_DIR]}/mobilome/{wildcards.GENUS} \
 		-d {config[DATA_DIR_MOB]}/external/database/nuc_db.fa -p {config[DATA_DIR_MOB]}/external/database/prot_db.fa"""
 
-rule align:
+#rule align:
+#	input:
+#		fasta1=expand("{DATA_DIR}/mobilome/{{SP1}}_seq.fa",DATA_DIR=config["DATA_DIR"]),
+#		fasta2=expand("{DATA_DIR}/mobilome/{{SP2}}_seq.fa",DATA_DIR=config["DATA_DIR"])
+#	output:
+#		out = expand("{DATA_DIR_MOB}/mobilome/alignments/pairs/{{SP2}}_{{SP1}}.tsv",DATA_DIR = config["DATA_DIR"],DATA_DIR_MOB=config["DATA_DIR_MOB"])
+#	conda:
+#		config["CONDA_FILE2"]
+#	shell:
+#		"""python3 {config[CODE_DIR]}/align_and_extract_coord_matches.py --st1 {input.fasta1} \
+#		--st2 {input.fasta2} \
+#		-o {output.out}"""
+
+
+rule getMatchesNoAlign:
 	input:
 		fasta1=expand("{DATA_DIR}/mobilome/{{SP1}}_seq.fa",DATA_DIR=config["DATA_DIR"]),
 		fasta2=expand("{DATA_DIR}/mobilome/{{SP2}}_seq.fa",DATA_DIR=config["DATA_DIR"])
 	output:
-		out = expand("{DATA_DIR_MOB}/mobilome/alignments/pairs/{{SP2}}_{{SP1}}.tsv",DATA_DIR = config["DATA_DIR"],DATA_DIR_MOB=config["DATA_DIR_MOB"])
+		out = expand("{DATA_DIR_MOB}/mobilome/Matches/pairs/{{SP2}}_{{SP1}}.tsv",DATA_DIR_MOB = config["DATA_DIR_MOB"])
 	conda:
 		config["CONDA_FILE2"]
 	shell:
-		"""python3 {config[CODE_DIR]}/align_and_extract_coord_matches.py --st1 {input.fasta1} \
-		--st2 {input.fasta2} \
-		-o {output.out}"""
+		"""mkdir -p {config[DATA_DIR_MOB]}/mobilome/Matches/{wildcards.SP2}_{wildcards.SP1}/
+ 		cd {config[DATA_DIR_MOB]}/mobilome/Matches/{wildcards.SP2}_{wildcards.SP1}/
+		{config[CODE_DIR]}/../bfmem/bfmem -s b -t 1 -l 20 -k 20  -o {output.out} -r {input.fasta1} -q {input.fasta2}"""
 
 #rule Intersect:
 #	input:
